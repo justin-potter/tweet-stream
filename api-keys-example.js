@@ -6,4 +6,4 @@ const apiKeys = {
   access_token_secret: 'SECRET'
 };
 
-export default apiKeys;
+module.exports = apiKeys;
