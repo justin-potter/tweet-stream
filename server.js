@@ -11,12 +11,12 @@ var stream = null;
 var locations = {
   SF: {
     sw: {
-      lng: '-122.75',
-      lat: '36.8',
+      lng: -122.75,
+      lat: 36.8,
     },
     ne: {
-      lng: '-121.75',
-      lat: '37.8',
+      lng: -121.75,
+      lat: 37.8,
     }
   }
 };

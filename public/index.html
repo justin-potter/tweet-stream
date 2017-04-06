@@ -3,8 +3,8 @@
 <html>
   <head>
       <style>
-       #map_canvas {
-        height: 400px;
+       .map {
+        height: 100%;
         width: 100%;
        }
     </style>
@@ -16,8 +16,8 @@
     <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization"></script>
     <script src="twitter-stream.js"></script>
-
+    <script src="map.js"></script>
   </head>
- <body class="iframe" onload="initialize()">
-    <div id="map_canvas"></div>
+ <body class="iframe" onload="setmap(new Map())">
+    <div class="map"></div>
 </html>
