@@ -2,11 +2,22 @@
 <meta charset="UTF-8">
 <html>
   <head>
+      <style>
+       #map_canvas {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
     <title>Twitter Stream</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script defer="defer" src="twitter-stream.js"></script>
+    <!-- <script src="/libs/jquery-1.10.1.js"></script> -->
+
+    <!-- Google Maps -->
+    <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization"></script>
+    <script src="twitter-stream.js"></script>
+
   </head>
-  <body>
-    <h1>Twitter Streaming...</h1>
-  </body>
+ <body class="iframe" onload="initialize()">
+    <div id="map_canvas"></div>
 </html>

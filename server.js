@@ -8,9 +8,22 @@ var twit = new twitter(apiKeys);
 
 var stream = null;
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
+var locations = {
+  SF: {
+    sw: {
+      lng: '-122.75',
+      lat: '36.8',
+    },
+    ne: {
+      lng: '-121.75',
+      lat: '37.8',
+    }
+  }
+};
+
+const locateString = (location) => {
+  return `${location.sw.lng},${location.sw.lat},${location.ne.lng},${location.ne.lat}`;
+};
 
 //Use the default port (for beanstalk) or default to 8081 locally
 http.listen(process.env.PORT || 8081);
@@ -26,23 +39,22 @@ io.on('connection', function (socket) {
   socket.on('start tweets', function() {
 
     if (stream === null) {
-      // Connect to twitter stream with filter for SF & NYC
-      twit.stream('statuses/filter', {'locations': '-180,-90,180,90'}, function(s) {
+      // Connect to twitter stream with filter for SF
+      // SF: '-122.75,36.8,-121.75,37.8'
+      // NYC: '-74,40,-73,41'
+      twit.stream('statuses/filter', {'locations': locateString(locations.SF)}, function(s) {
         stream = s;
         s.on('data', function(data) {
           console.log('data', data);
           // if (data.coordinates) {
-          //   //If so then build up some nice json and send out to web sockets
-          //   var outputPoint = {
-          //     lat: data.coordinates.coordinates[0],
-          //     lng: data.coordinates.coordinates[1]
-          //   };
+            //If so then build up some nice json and send out to web sockets
+          var outputPoint = data;
 
-          //   socket.broadcast.emit('twitter-stream', outputPoint);
+          socket.broadcast.emit('twitter-stream', outputPoint);
 
-          //   //Send out to web sockets channel.
-          //   socket.emit('twitter-stream', outputPoint);
-          // }
+          //Send out to web sockets channel.
+          socket.emit('twitter-stream', outputPoint);
+        // }
         });
       });
     }
@@ -54,5 +66,5 @@ io.on('connection', function (socket) {
 
     // Emits signal to the client telling them that the
     // they are connected and can start receiving Tweets
-  socket.emit('connected');
+  socket.emit('connected', locations.SF);
 });
